@@ -72,6 +72,8 @@ L'installation du paquet se fait à l'aide de **devtools** :
 Le dossier de travail est indiqué dans la variable `d_projetZR`.
 Ce dossier de travail doit avoir une arbrescence particulière comme suit :
 
+*Pour des raison de simplification, les autres fichiers de définitions des couches SIG autres que le fichier .shp ne sont pas représentés mais doivent être présents.*
+
 ```bash
 Dossier de travail
 ├── AGENCE
