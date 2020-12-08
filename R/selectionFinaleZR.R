@@ -1,0 +1,38 @@
+#' Procedure simplifiant les donnes sur les nouvelles communes. Elle permet de definir la structure du fichier des zonages qui sera reutilise l'annee suivante.
+#'
+#' @param dataCommIGN_ZR_A Data.frame. Contient les donnees Admin Express avec les informations sur les zonages
+#' @param verbose Booleen. Indique si les messages d'information sont affiches.
+#'
+#' @return Data.frame.
+#' @export
+#'
+#' @examples
+selectionFinaleZR <- function(dataCommIGN_ZR_A, verbose = FALSE){
+  if(verbose) base::message("Finalisation de la structure et des donnees du tableau des zonages")
+  # Simplification de l'écriture
+  d <- dataCommIGN_ZR_A
+  # Ajout des informations sur les communes qui n'ont pas changee
+  # pour chaque zonage
+  d[is.na(d$INSEE_N), "ZR_POLDOM_N"] <- d[is.na(d$INSEE_N), "ZR_POLDOM"]
+  d[is.na(d$INSEE_N), "ZR_PREL_ESU_N"] <- d[is.na(d$INSEE_N), "ZR_PREL_ESU"]
+  d[is.na(d$INSEE_N), "ZR_PREL_ESO_N"] <- d[is.na(d$INSEE_N), "ZR_PREL_ESU"]
+  # pour chaque code insee
+  d[is.na(d$INSEE_N), "INSEE_N"] <- d[is.na(d$INSEE_N), "INSEE_COM"]
+  # sur l'indicatation qu'il ne s'agit pas de communes nouvelles
+  d[is.na(d$INSEE_N), "INFO_N"] <- "NON"
+  # Simplification des colonnes
+  d <- d[,c("INSEE_N","INFO_N","ZR_POLDOM_N","ZR_PREL_ESO_N","ZR_PREL_ESU_N")]
+  # Renommage des colonnes
+  colnames(d) <- c("INSEE_COM","NOUVEAU","ZR_POLDOM","ZR_PREL_ESO","ZR_PREL_ESU")
+  # Suppression des doublons
+  d <- unique(d)
+  # Verification de la coherence des codes INSEE
+  VerifDoublons <- duplicated(d$INSEE_N[!(is.na(d$INSEE_N))])
+
+  if(length(VerifDoublons[VerifDoublons == TRUE]) != 0){
+    base::stop(paste("Des communes en double ont ete detectees :", paste(d[VerifDoublons, "INSEE_N"], collapse = " "), "\n",
+                     "Verifiez le fichier des changements Agence"))
+  }
+  # Valeur de retour
+  return(d)
+}

@@ -1,0 +1,23 @@
+Package: AEczr
+Title: Creation des zonages de redevances en fonction des modification administratives publiees par l'INSEE
+Version: 1.0
+Authors@R: 
+    person(given = "Nicolas",
+           family = "Aubin",
+           role = c("aut", "cre"),
+           email = "aubinnic@gmail.com",
+           comment = c(ORCID = "0000-0002-0289-9924"))
+Description: Ce paquet permet de recreer le fichier des communes avec leur zonage respectif. Ce fichier sert notament a configurer les outils de calcul des redevances des agences de l'eau. Ce paquet sert egalement a générer les couches SIG des zonages.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    httr,
+    maptools,
+    methods,
+    rgdal,
+    rgeos,
+    sp,
+    xlsx
