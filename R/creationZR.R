@@ -119,7 +119,7 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
     commZR_Na <- ajoutInfosAgence(dataCommIGN_ZR_A = commZR_Nf, fichierChgmtsAgence = fichierChgmtsAgence, valZR = valZR, verbose = verbose)
 
     # Ajout des informations sur les communes qui n'ont pas changees
-    commZR_N_Final <- selectionFinaleZR(dataCommIGN_ZR_A = commZR_Na, verbose = verbose)
+    commZR_N_Final <- selectionFinaleZR(dataCommIGN_ZR_A = commZR_Na, dataINSEE = dataINSEE, verbose = verbose)
   }
 
   # PROCEDURE COMMUNE AVEC OU SANS NOUVEAU PROGRAMME
@@ -152,7 +152,7 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
     # Definition du fichier final de sortie
     f_commzr_n <- paste0(d_projetZR,"/RESULTATS/", annee_n, "/Liste_communes_ZR_", annee_n, ".xlsx")
     # Export du fichier final
-    xlsx::write.xlsx2(commZR_N_Final_Filtre, file = f_commzr_n, sheetName = "communes_ZR")
+    xlsx::write.xlsx2(commZR_N_Final_Filtre, file = f_commzr_n, sheetName = "communes_ZR", row.names = FALSE)
   }
 
   # Chargement de l'Admin Express COG pour l'annee N (Utilisation des donnees precises = Non _Carto)

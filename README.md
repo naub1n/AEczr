@@ -167,7 +167,7 @@ Une seule fonction est utile pour créer les nouveaux zonages : `AEczr::creation
 
 ## 6.1. Cas de la prise en compte des changements de communes en cours de Programme Agence de l'eau
 
-Avant d'exectuer la fonction, certaines données sont nécessaires. Le script indiquera un message d'erreur avec la donnée manquante si besoin.
+Avant d'exécuter la fonction, certaines données sont nécessaires. Le script indiquera un message d'erreur avec la donnée manquante si besoin.
 
 * Admin Express COG de l'année N
 * Admin Express COG de l'année N-1
@@ -181,7 +181,7 @@ Avant d'exectuer la fonction, certaines données sont nécessaires. Le script in
 
 ## 6.2. Cas d'un nouveau Programme
 
-Avant d'exectuer la fonction, certaines données sont nécessaires. Le script indiquera un message d'erreur avec la donnée manquante si besoin.
+Avant d'exécuter la fonction, certaines données sont nécessaires. Le script indiquera un message d'erreur avec la donnée manquante si besoin.
 
 * Admin Express COG de l'année N
 * Un accès à l'application RADE (si RADE est défini comme source INSEE = choix par défaut)

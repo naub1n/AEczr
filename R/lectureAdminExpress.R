@@ -30,6 +30,7 @@ lectureAdminExpress <- function(annee, d_admin_express, carto = TRUE, verbose = 
     # Sinon utilisation de la version precise
     layer <- "COMMUNE"
   }
+  if(verbose) base::message("Lecture de la couche  ", layer, " dans ", d_commCOG)
   # Lecture de la donnees cartographique
   shpAdminExpress <- rgdal::readOGR(dsn = d_commCOG,
                  layer = layer,
