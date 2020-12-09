@@ -4,10 +4,12 @@
 \alias{selectionFinaleZR}
 \title{Procedure simplifiant les donnes sur les nouvelles communes. Elle permet de definir la structure du fichier des zonages qui sera reutilise l'annee suivante.}
 \usage{
-selectionFinaleZR(dataCommIGN_ZR_A, verbose = FALSE)
+selectionFinaleZR(dataCommIGN_ZR_A, dataINSEE, verbose = FALSE)
 }
 \arguments{
 \item{dataCommIGN_ZR_A}{Data.frame. Contient les donnees Admin Express avec les informations sur les zonages}
+
+\item{dataINSEE}{Data.frame. Contient les informations de l'INSEE au format RADE pour l'annee etudiee (Resultat de la fonction lectureINSEE()).}
 
 \item{verbose}{Booleen. Indique si les messages d'information sont affiches.}
 }
