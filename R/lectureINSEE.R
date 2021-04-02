@@ -33,7 +33,7 @@ lectureINSEE <- function(annee_n, code_bassin, d_projetZR = NULL, type = "RADE",
     httr::POST(url='http://rade.aesn.fr/referentiel/commune/export',
          encode = "form", httr::write_disk(dataRade, overwrite = T))
     # Lecture des donnees recuperees
-    data <- xlsx::read.xlsx2(dataRade, sheetIndex = 1, startRow = 2)
+    data <- xlsx::read.xlsx2(dataRade, sheetIndex = 1, startRow = 2, stringsAsFactors = FALSE)
     # Suppression des accents dans les noms de champ
     colnames(data) <-  iconv(colnames(data),to="ASCII//TRANSLIT")
     # Convertion/creation du champs data (format Excel)
@@ -48,7 +48,7 @@ lectureINSEE <- function(annee_n, code_bassin, d_projetZR = NULL, type = "RADE",
       "Rétablissement" = "scission"
     )
     # Transformation de la liste en data.frame
-    simplChgmt <- data.frame(chgmtLong = names(simplChgmt), chgmtCourt = unlist(unname(simplChgmt)))
+    simplChgmt <- data.frame(chgmtLong = names(simplChgmt), chgmtCourt = unlist(unname(simplChgmt)), stringsAsFactors = FALSE)
     # LE FORMAT DES ESPACES PERTURBENT LES COMPARAISON => SUPRESSION DES ESPACES
     # Supression des espaces dans la liste des changements simplifies
     simplChgmt$chgmtLong <- gsub("[[:space:]]", "_", simplChgmt$chgmtLong)
