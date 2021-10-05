@@ -30,6 +30,9 @@ ajoutScissions <- function(dataCommIGN_ZR_A, chgmtsINSEE, valZR, fichierChgmtsAg
   # Fin de la fonction si aucune scission n'est presente
   if(nrow(scissions) == 0){
     if(verbose) base::message("Aucune scission")
+    # Ajout des colonnes vides sur les nouvelles informations pour éviter les erreurs dans la fonction selectionFinaleZR (plantage ajout valeurs par default sur colonnes manquantes)
+    listeColonnesNouvelles <- c("ZR_POLDOM_N","ZR_PREL_ESO_N","ZR_PREL_ESU_N","INSEE_N","INFO_N")
+    dataCommIGN_ZR_A[listeColonnesNouvelles] <- NA
     # Renvoie du tableau d'origine sans modification
     return(dataCommIGN_ZR_A)
   } else {
