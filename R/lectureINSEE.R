@@ -45,7 +45,8 @@ lectureINSEE <- function(annee_n, code_bassin, d_projetZR = NULL, type = "RADE",
       #"Changement de nom" = "",
       "Commune se séparant" = "scission",
       "Commune nouvelle sans déléguée : commune-pôle" = "fusion",
-      "Rétablissement" = "scission"
+      "Rétablissement" = "scission",
+      "Changement de code dû à un transfert de chef-lieu" = "code"
     )
     # Transformation de la liste en data.frame
     simplChgmt <- data.frame(chgmtLong = names(simplChgmt), chgmtCourt = unlist(unname(simplChgmt)), stringsAsFactors = FALSE)
