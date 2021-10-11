@@ -93,14 +93,14 @@ geometriesZonages <- function(annee_n, d_projetZR, commIGN_ZR_N, zre_esu = TRUE,
 
   #Exportation des fichier SHP
   if(verbose) base::message("Export des zonages sans ZRE")
-  rgdal::writeOGR(commIGN_ZR_N, dossierResultat, paste0("COMMUNE_ZR_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_POL_BASE) rgdal::writeOGR(shpZR_POL_Base, dossierResultat, paste0("ZR_Poll_Base_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_POL_MOY) rgdal::writeOGR(shpZR_POL_Moy, dossierResultat, paste0("ZR_Poll_Moyenne_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_POL_REN) rgdal::writeOGR(shpZR_POL_Ren, dossierResultat, paste0("ZR_Poll_Renforcee_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_PREL_ESO_BASE) rgdal::writeOGR(shpZR_ESO_Base, dossierResultat, paste0("ZR_Prel_ESO_Base_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_PREL_ESO_ZTQ) rgdal::writeOGR(shpZR_ESO_ZTQ, dossierResultat, paste0("ZR_Prel_ESO_ZTQ_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_PREL_ESU_BASE) rgdal::writeOGR(shpZR_ESU_Base, dossierResultat, paste0("ZR_Prel_ESU_Base_",annee_n),"ESRI Shapefile", verbose = verbose)
-  if(exist_PREL_ESU_ZTQ) rgdal::writeOGR(shpZR_ESU_ZTQ, dossierResultat, paste0("ZR_Prel_ESU_ZTQ_",annee_n),"ESRI Shapefile", verbose = verbose)
+  rgdal::writeOGR(commIGN_ZR_N, dossierResultat, paste0("COMMUNE_ZR_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_POL_BASE) rgdal::writeOGR(shpZR_POL_Base, dossierResultat, paste0("ZR_Poll_Base_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_POL_MOY) rgdal::writeOGR(shpZR_POL_Moy, dossierResultat, paste0("ZR_Poll_Moyenne_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_POL_REN) rgdal::writeOGR(shpZR_POL_Ren, dossierResultat, paste0("ZR_Poll_Renforcee_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_PREL_ESO_BASE) rgdal::writeOGR(shpZR_ESO_Base, dossierResultat, paste0("ZR_Prel_ESO_Base_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_PREL_ESO_ZTQ) rgdal::writeOGR(shpZR_ESO_ZTQ, dossierResultat, paste0("ZR_Prel_ESO_ZTQ_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_PREL_ESU_BASE) rgdal::writeOGR(shpZR_ESU_Base, dossierResultat, paste0("ZR_Prel_ESU_Base_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
+  if(exist_PREL_ESU_ZTQ) rgdal::writeOGR(shpZR_ESU_ZTQ, dossierResultat, paste0("ZR_Prel_ESU_ZTQ_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
   rgdal::writeOGR(sp::spTransform(shpLimAdmin, sp::CRS("+init=epsg:2154")), dossierResultat, paste0("Lim_Admin_",annee_n),"ESRI Shapefile", overwrite_layer = T, verbose = verbose)
 
   if(zre_esu == TRUE){

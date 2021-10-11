@@ -55,7 +55,7 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
   }
   # Lecture du fichier des zonages
   if(verbose) base::message("Lecture du fichier Excel des zonages des communes \n", f_commzr_a)
-  commZR_A <- xlsx::read.xlsx2(file = f_commzr_a, sheetIndex = 1)
+  commZR_A <- xlsx::read.xlsx2(file = f_commzr_a, sheetIndex = 1, stringsAsFactors = FALSE)
   # S'il s'agit d'un nouveau programme, les etapes sont simplifiees, le fichiers des communes est deja pret.
   if(nouveau_prog == TRUE){
     if(verbose) base::message("Procedure pour un nouveau programme")
@@ -115,8 +115,11 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
     # Ajout du traitement des fusions
     commZR_Nf <- ajoutFusions(dataCommIGN_ZR_A = commZR_Ns, chgmtsINSEE = chgmtsINSEE, valZR = valZR, verbose = verbose)
 
+    # Ajout du traitement des changements de code INSEE
+    commZR_Nc <- ajoutChgmtCode(dataCommIGN_ZR_A = commZR_Nf, chgmtsINSEE = chgmtsINSEE, valZR = valZR, verbose = verbose)
+
     # Ajout des information specifiques definies par l'Agence
-    commZR_Na <- ajoutInfosAgence(dataCommIGN_ZR_A = commZR_Nf, fichierChgmtsAgence = fichierChgmtsAgence, valZR = valZR, verbose = verbose)
+    commZR_Na <- ajoutInfosAgence(dataCommIGN_ZR_A = commZR_Nc, fichierChgmtsAgence = fichierChgmtsAgence, valZR = valZR, verbose = verbose)
 
     # Ajout des informations sur les communes qui n'ont pas changees
     commZR_N_Final <- selectionFinaleZR(dataCommIGN_ZR_A = commZR_Na, dataINSEE = dataINSEE, verbose = verbose)
@@ -128,7 +131,7 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
   # ATTENTION : Peut etre le cas lors des changements de bassin
   if(nrow(commZR_N_Final) != nrow(dataINSEE)){
     # Definition du message d'erreur
-    msgCoherence <- paste("Incoherence entre les donnees du traitement et l'INSEE sur les communes suivantes: \n",
+    msgCoherence <- paste("Test INSEE - Incoherence entre les donnees du traitement et l'INSEE sur les communes suivantes: \n",
                           "Communes non presentes dans les donnees de l'INSEE\n",
                           paste(base::setdiff(commZR_N_Final$INSEE_COM, dataINSEE$Code), collapse = " "), "\n",
                           "Communes non presentes dans les donnees de zonages de l'annee n-1\n",
@@ -136,7 +139,7 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
     # Indication du message en Warning ou en Error.
     if(ignoreCoherence == TRUE) base::warning(msgCoherence) else base::stop(msgCoherence)
   } else {
-    if(verbose) base::message("Nombre de communes coherent : ", nrow(commZR_N_Final), " communes pour l'annee ", annee_n)
+    if(verbose) base::message("Test INSEE - Nombre de communes coherent : ", nrow(commZR_N_Final), " communes pour l'annee ", annee_n)
   }
 
   #Filtre sur les communes officielles de l'INSEE de l'annee N
@@ -160,6 +163,19 @@ creationZR <- function(annee_n, d_projetZR, code_bassin, nouveau_prog = FALSE, d
 
   # Fusion des donnees de nouveaux zonages et de l'IGN
   commIGN_ZR_N <- sp::merge(commIGN_N, commZR_N_Final_Filtre, by.x = "INSEE_COM", by.y = "INSEE_COM", all.x = FALSE, all.y = TRUE)
+
+  if(nrow(commZR_N_Final_Filtre) != nrow(commIGN_ZR_N)){
+    # Definition du message d'erreur
+    msgCoherence <- paste("Test IGN - Incoherence entre les donnees du traitement et l'IGN AdminExpressCOG sur les communes suivantes: \n",
+                          "Communes non presentes dans les donnees de l'IGN AdminExpressCOG\n",
+                          paste(base::setdiff(commZR_N_Final_Filtre$INSEE_COM, commIGN_ZR_N$INSEE_COM), collapse = " "), "\n",
+                          "Communes non presentes dans le resultat du traitement\n",
+                          paste(base::setdiff(commIGN_ZR_N$INSEE_COM, commZR_N_Final_Filtre$INSEE_COM), collapse = " "))
+    # Indication du message en Warning ou en Error.
+    if(ignoreCoherence == TRUE) base::warning(msgCoherence) else base::stop(msgCoherence)
+  } else {
+    if(verbose) base::message("Test IGN - Nombre de communes coherent : ", nrow(commZR_N_Final), " communes pour l'annee ", annee_n)
+  }
 
   # Traitement geographique
   geometriesZonages(annee_n, d_projetZR, commIGN_ZR_N, zre_esu = zre_esu, zre_eso = zre_eso, d_ZRE = d_ZRE, verbose = verbose)
