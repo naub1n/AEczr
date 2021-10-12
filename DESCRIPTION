@@ -1,6 +1,6 @@
 Package: AEczr
 Title: Creation des zonages de redevances en fonction des modification administratives publiees par l'INSEE
-Version: 1.1
+Version: 1.2
 Authors@R: 
     person(given = "Nicolas",
            family = "Aubin",
